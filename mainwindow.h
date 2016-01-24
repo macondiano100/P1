@@ -5,6 +5,7 @@
 #include <list>
 #include <memory>
 #include "proceso.h"
+#include "dialogosimulacion.h"
 #include "lote.h"
 namespace Ui {
 class MainWindow;
@@ -30,9 +31,13 @@ private:
     void updateCuentaGroupBoxProcesos();
     std::map <QString,Operador> *opcionesOperadores;
     std::list<Lote_shrdptr> lotes;
+    DialogoSimulacion* dialogoSimulacion;
+    bool validaCampos();
+    void notificaError(QString razon);
 private slots:
     void nProcesosELegido();
     void accionBotonSiguienteProceso();
+    void accionBotonIniciarSimulacion();
 };
 
 #endif // MAINWINDOW_H

@@ -16,13 +16,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     proceso.cpp \
     lote.cpp \
-    Visual/clock.cpp
+    Visual/clock.cpp \
+    dialogosimulacion.cpp
 
 HEADERS  += mainwindow.h \
     proceso.h \
     lote.h \
-    Visual/clock.h
+    Visual/clock.h \
+    dialogosimulacion.h
 
 FORMS    += mainwindow.ui \
-    Visual/clock.ui
+    Visual/clock.ui \
+    dialogosimulacion.ui
 CONFIG += c++11

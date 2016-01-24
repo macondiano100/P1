@@ -13,18 +13,18 @@ class Clock : public QLabel
 
 public:
     explicit Clock(QWidget *parent = 0);
-    void start(unsigned ms);
+    void start(int ms);
 
     ~Clock();
 
 private:
-    QTimer* timer;
     unsigned value;
+    QTimer *timer;
     Ui::Clock *ui;
 signals:
     void updated(unsigned value);
 public slots:
-    void update();
+    void updateValue();
 
 };
 

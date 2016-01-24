@@ -7,7 +7,6 @@ Clock::Clock(QWidget *parent) :
 {
     ui->setupUi(this);
     timer=new QTimer(this);
-    connect(timer,SIGNAL(timeout()),this,SLOT(updateValue()));
     setText(QString::number(0));
     repaint();
 }
@@ -15,14 +14,16 @@ Clock::Clock(QWidget *parent) :
 void Clock::start(int ms){
     setText("0");
     timer->start(ms);
+    connect(timer,SIGNAL(timeout()),this,SLOT(update()));
 }
 
 Clock::~Clock()
 {
     delete ui;
+    delete timer;
 }
 
-void Clock::updateValue()
+void Clock::update()
 {
     qDebug()<<value;
     setText(QString::number(++value));

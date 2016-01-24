@@ -2,11 +2,13 @@
 #include "ui_mainwindow.h"
 #include <QString>
 #include <QMap>
+#include <QMessageBox>
 #include <unordered_map>
 #include <QDebug>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    dialogoSimulacion(nullptr)
 {
     ui->setupUi(this);
     setHabilitacionCamposProceso(false);
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete opcionesOperadores;
+    if(dialogoSimulacion!=nullptr)delete dialogoSimulacion;
     delete ui;
 }
 
@@ -64,9 +67,9 @@ void MainWindow::nProcesosELegido()
         updateCuentaGroupBoxProcesos();
     }
 }
-
 void MainWindow::accionBotonSiguienteProceso()
 {
+    if(!validaCampos()) return;
     if(tamanioLoteActual==0)
     {
         loteActual.reset(new Lote(4));
@@ -97,4 +100,55 @@ void MainWindow::accionBotonSiguienteProceso()
         }
     }
 
+}
+
+bool MainWindow::validaCampos()
+{
+    Operador operador=opcionesOperadores->at(ui->comboOperacion->currentText());
+    bool camposValidos=true;
+    QString razon;
+    if(operador==Operador::DIVISION||operador==Operador::RESTO)
+    {
+        if(ui->spinOperador2->text().toDouble()==0){
+            camposValidos=false;
+            razon=tr("No se puede dividir entre cero.");
+        }
+    }
+    else if(operador==Operador::RAIZ)
+    {
+        if(ui->spinOperador1->text().toDouble()<0){
+            camposValidos=false;
+            razon=tr("Las raíces de números negativos no existen.");
+        }
+    }
+    int id=ui->spinId->text().toInt();
+    if(loteActual!=nullptr)
+    {for(auto p:*loteActual)
+        {if(p->getId()==id){
+                camposValidos=false;
+                razon=tr("ID ya existe");
+                break;}}}
+    for(auto l:lotes){
+        for(auto p:*l){
+            if(p->getId()==id){
+                camposValidos=false;
+                razon=tr("ID ya existe");
+                break;}}}
+    if(!camposValidos)notificaError(razon);
+    return camposValidos;
+}
+
+void MainWindow::notificaError(QString razon)
+{
+    QMessageBox msgBOx(this);
+    msgBOx.setText(razon);
+    msgBOx.exec();
+}
+
+void MainWindow::accionBotonIniciarSimulacion()
+{
+    dialogoSimulacion=new DialogoSimulacion(lotes,this);
+    dialogoSimulacion->exec();
+    delete dialogoSimulacion;
+    dialogoSimulacion=nullptr;
 }
