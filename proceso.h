@@ -1,6 +1,7 @@
 #ifndef PROCESO_H
 #define PROCESO_H
 #include <QString>
+#include <memory>
 enum class Operador{
     SUMA=1,
     RESTA,
@@ -22,11 +23,14 @@ class Proceso
     const bool resuelto;
     Proceso(QString,QString,Operador,unsigned,QString);
 public:
-    Proceso solve();
+    std::unique_ptr<Proceso> solve() const;
     ~Proceso();
+    QString getResult() const;
+    bool estaResuelto() const;
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,
             Operador operador, unsigned tiempo);
+
 private:
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,
