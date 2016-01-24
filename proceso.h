@@ -21,7 +21,6 @@ class Proceso
     const unsigned maxTiempo;
     const QString resultado;
     const bool resuelto;
-    Proceso(QString,QString,Operador,unsigned,QString);
 public:
     std::unique_ptr<Proceso> solve() const;
     ~Proceso();

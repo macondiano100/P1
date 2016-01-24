@@ -14,10 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    proceso.cpp
+    proceso.cpp \
+    lote.cpp \
+    Visual/clock.cpp
 
 HEADERS  += mainwindow.h \
-    proceso.h
+    proceso.h \
+    lote.h \
+    Visual/clock.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    Visual/clock.ui
 CONFIG += c++11
