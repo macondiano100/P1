@@ -27,6 +27,7 @@ public:
     ~Proceso();
     QString getResult() const;
     bool estaResuelto() const;
+    int getMaxTiempo() const;
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,
             Operador operador, unsigned tiempo);

@@ -64,3 +64,8 @@ bool Proceso::estaResuelto() const
     return resuelto;
 }
 
+int Proceso::getMaxTiempo() const
+{
+    return maxTiempo;
+}
+
