@@ -8,7 +8,6 @@ Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
       operando1(operando1),operando2(operando2),operador(operador),
       maxTiempo(tiempo),resultado(resultado),resuelto(resuelto)
 {
-    qDebug()<<resultado;
 }
 
 Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
@@ -54,7 +53,7 @@ Proceso::~Proceso()
 
 }
 
-QString Proceso::getResult() const
+QString Proceso::getResultado() const
 {
     return resultado;
 }
@@ -64,8 +63,34 @@ bool Proceso::estaResuelto() const
     return resuelto;
 }
 
-int Proceso::getMaxTiempo() const
+QString Proceso::getNombreProgramador() const
+{
+    return nombreProgramador;
+}
+
+int Proceso::getId() const
+{
+    return id;
+}
+
+QString Proceso::getOperando1() const
+{
+    return operando1;
+}
+
+QString Proceso::getOperando2() const
+{
+    return operando2;
+}
+
+Operador Proceso::getOperador() const
+{
+    return operador;
+}
+
+unsigned Proceso::getMaxTiempo() const
 {
     return maxTiempo;
 }
+
 

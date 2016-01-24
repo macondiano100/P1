@@ -25,9 +25,14 @@ class Proceso
 public:
     std::unique_ptr<Proceso> solve() const;
     ~Proceso();
-    QString getResult() const;
     bool estaResuelto() const;
-    int getMaxTiempo() const;
+    QString getNombreProgramador() const ;
+    int getId() const;
+    QString getOperando1() const;
+    QString getOperando2() const;
+    Operador getOperador() const;
+    unsigned getMaxTiempo() const;
+    QString getResultado() const;
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,
             Operador operador, unsigned tiempo);
