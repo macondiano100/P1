@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogoSimulacion</class>
+ <widget class="QDialog" name="DialogoSimulacion">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>404</width>
+    <height>183</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="1" rowspan="3" colspan="2">
+    <widget class="QListView" name="listaLoteActual">
+     <property name="textElideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold</string>
+     </property>
+     <property name="text">
+      <string>Lotes Restantes:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold</string>
+     </property>
+     <property name="text">
+      <string>Proceso En Ejecución</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QLabel" name="label_3">
+     <property name="styleSheet">
+      <string notr="true">font-weight: bold</string>
+     </property>
+     <property name="text">
+      <string>Lote En Ejecución</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QLabel" name="label_proceso_actual">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="7">
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Tiempo Actual</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Clock" name="clock">
+        <property name="styleSheet">
+         <string notr="true">background-color:rgb(0, 0, 0);
+font:  &quot;Agency FB&quot;;
+color:rgb(0, 255, 127);</string>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="4" rowspan="3" colspan="2">
+    <widget class="QListView" name="listaProcesosTerminados"/>
+   </item>
+   <item row="2" column="4" colspan="3">
+    <widget class="QLabel" name="label_5">
+     <property name="styleSheet">
+      <string notr="true">font-weight:bold</string>
+     </property>
+     <property name="text">
+      <string>Procesos Terminados</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="5">
+    <widget class="QLabel" name="labelLotesRestantes">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Clock</class>
+   <extends>QLabel</extends>
+   <header>Visual/clock.h</header>
+   <slots>
+    <signal>updated(unsigned)</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>clock</sender>
+   <signal>updated(unsigned)</signal>
+   <receiver>DialogoSimulacion</receiver>
+   <slot>changeView(unsigned)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>201</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>changeView(unsigned)</slot>
+ </slots>
+</ui>

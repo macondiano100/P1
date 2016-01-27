@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>472</width>
+    <height>237</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0" colspan="5">
+     <widget class="QGroupBox" name="groupInfoProceso">
+      <property name="title">
+       <string>Información del Proceso Número </string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboOperacion">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Operación</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Nombre del Programador</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2" colspan="4">
+        <widget class="QLineEdit" name="campoNombreProgramador">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Operador 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Operador 1</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QDoubleSpinBox" name="spinOperador1">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <double>-1000000.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QDoubleSpinBox" name="spinOperador2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <double>-1000000.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>1000000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>0.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Tiempo Máximo Estimado</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QSpinBox" name="spinId">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Número de Programa</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QSpinBox" name="spinMaxTime">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="5">
+        <widget class="QPushButton" name="botonSIguienteProceso">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Siguiente</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>spinOperador2</zorder>
+      <zorder>label_6</zorder>
+      <zorder>label_4</zorder>
+      <zorder>spinMaxTime</zorder>
+      <zorder>spinOperador1</zorder>
+      <zorder>comboOperacion</zorder>
+      <zorder>campoNombreProgramador</zorder>
+      <zorder>label_2</zorder>
+      <zorder>label_5</zorder>
+      <zorder>spinId</zorder>
+      <zorder>label_7</zorder>
+      <zorder>label_3</zorder>
+      <zorder>botonSIguienteProceso</zorder>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Elija el Número de procesos a introducir</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="QPushButton" name="botonNumeroProcesos">
+      <property name="text">
+       <string>Elegir</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QSpinBox" name="spinBoxNumeroProcesos"/>
+    </item>
+    <item row="2" column="4">
+     <widget class="QPushButton" name="botonSimular">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Iniciar Simulación</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>472</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>botonNumeroProcesos</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>nProcesosELegido()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>botonSIguienteProceso</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>accionBotonSiguienteProceso()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>202</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>botonSimular</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>accionBotonIniciarSimulacion()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>118</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>nProcesosELegido()</slot>
+  <slot>accionBotonSiguienteProceso()</slot>
+  <slot>accionBotonIniciarSimulacion()</slot>
+ </slots>
+</ui>
