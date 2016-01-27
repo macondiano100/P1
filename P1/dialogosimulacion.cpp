@@ -98,6 +98,7 @@ void DialogoSimulacion::changeView(unsigned currTime)
         tiempoProcesoActual++;
         if(tiempoProcesoActual>=proceso_en_ejecucion->getMaxTiempo())
         {
+            tiempoProcesoActual=0;
             procesosTerminados.push_back(proceso_en_ejecucion->solve());
             updateListaProcesosTerminados();
             if(lote_en_ejecucion->empty())
