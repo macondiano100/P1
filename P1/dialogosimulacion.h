@@ -17,7 +17,7 @@ class DialogoSimulacion : public QDialog
     std::map <Operador,QString> *opcionesOperadores;
     using Lote_shrdptr=std::shared_ptr<Lote>;
     std::list<Lote_shrdptr> lotesPendientes;
-    std::list<Lote::Proceso_ptr> procesosTerminados;
+    std::list<std::shared_ptr<Lote>> lotesTerminados;
     Lote::Proceso_ptr proceso_en_ejecucion;
     Lote_shrdptr lote_en_ejecucion;
 public:

@@ -72,7 +72,7 @@ void MainWindow::accionBotonSiguienteProceso()
     if(!validaCampos()) return;
     if(tamanioLoteActual==0)
     {
-        loteActual.reset(new Lote(4));
+        loteActual.reset(new Lote(LOTE_SIZE));
     }
     Operador op=opcionesOperadores->at(ui->comboOperacion->currentText());
     Lote::Proceso_ptr proceso(new Proceso(ui->campoNombreProgramador->text(),
@@ -93,7 +93,7 @@ void MainWindow::accionBotonSiguienteProceso()
     }
     else{
         updateCuentaGroupBoxProcesos();
-        if(tamanioLoteActual>=MAX_PROCESOS_POR_LOTE)
+        if(tamanioLoteActual>=LOTE_SIZE)
         {
             tamanioLoteActual=0;
             lotes.push_back(loteActual);
