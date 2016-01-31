@@ -7,9 +7,9 @@
 GeneradorProcesos::GeneradorProcesos(int cantidad):cantidad(cantidad),
     contadorId(0),
     rd(),
-    int_generator(rd()),distOperandos(-10000,10000),
+    int_generator(rd()),distOperandos(-100,100),
     distOperadores(static_cast<int>(Operador::SUMA),static_cast<int>(Operador::RESTO)),
-    distTiempo(1,30)
+    distTiempo(5,10)
 {
 }
 
