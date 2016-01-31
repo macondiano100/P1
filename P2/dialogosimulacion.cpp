@@ -2,6 +2,33 @@
 #include "ui_dialogosimulacion.h"
 #include <QList>
 #include <memory>
+#include <QKeyEvent>
+#include <iostream>
+#include <QDebug>
+void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
+{
+    QWidget::keyPressEvent(event);
+    switch (event->key()) {
+    case Qt::Key_I:
+        qDebug()<<"I";
+        break;
+    case Qt::Key_B:
+        break;
+    case Qt::Key_P:
+        ui->clock->pause();
+        std::cout<<"Most pause"<<std::endl;
+
+        break;
+    case Qt::Key_C:
+        ui->clock->resume();
+        std::cout<<"C"<<std::endl;
+        break;
+
+    default:
+        break;
+    }
+}
+
 DialogoSimulacion::DialogoSimulacion
 (std::list<Lote_shrdptr> &lotes, QWidget *parent) :
     QDialog(parent),
@@ -83,9 +110,10 @@ void DialogoSimulacion::updateLabelProcesoActual(int tiempoTranscurrido)
 {
     if(!finishedSimulation) ui->label_proceso_actual->setText(
                 tr("Programador:")+proceso_en_ejecucion->getNombreProgramador()+"\n"+
-                tr("Operación: ")+proceso_en_ejecucion->getOperando1()+
-                    opcionesOperadores->at(proceso_en_ejecucion->getOperador())+
-                    proceso_en_ejecucion->getOperando2()+"\n"+
+                tr("Operación: ")+
+                opcionesOperadores->at(proceso_en_ejecucion->getOperador())+" "+
+                proceso_en_ejecucion->getOperando1()+","+
+                proceso_en_ejecucion->getOperando2()+"\n"+
                 tr("T.M.E: ")+QString::number(proceso_en_ejecucion->getMaxTiempo())+"\n"+
                 tr("Id: ")+QString::number(proceso_en_ejecucion->getId())+"\n"+
                 tr("Tiempo Transcurrido: ")+QString::number(tiempoTranscurrido)+"\n"+
