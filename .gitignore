@@ -45,3 +45,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.exe
+*.o
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/Makefile
+*.Debug
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/Makefile.Release
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/ui_mainwindow.h
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/debug/moc_mainwindow.cpp
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/debug/moc_clock.cpp
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/debug/moc_dialogosimulacion.cpp
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/ui_dialogosimulacion.h
+build-P2-Desktop_Qt_5_4_1_MinGW_32bit-Debug/ui_clock.h

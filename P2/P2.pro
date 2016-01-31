@@ -17,19 +17,20 @@ SOURCES += main.cpp\
     dialogosimulacion.cpp \
     lote.cpp \
     proceso.cpp \
-    Visual/clock.cpp
+    Visual/clock.cpp \
+    Modelo/genera_procesos.cpp
 
 HEADERS  += mainwindow.h \
     dialogosimulacion.h \
     lote.h \
     proceso.h \
-    Visual/clock.h
+    Visual/clock.h \
+    Modelo/genera_procesos.h
 
 FORMS    += mainwindow.ui \
     dialogosimulacion.ui \
     Visual/clock.ui
 CONFIG += c++11
 
-DISTFILES += \
-    P2.pro.user
+DISTFILES +=
 
