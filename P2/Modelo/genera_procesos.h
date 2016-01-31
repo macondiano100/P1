@@ -4,6 +4,7 @@
 #include <memory>
 #include <random>
 #include <array>
+
 class GeneradorProcesos
 {
     int cantidad;
@@ -16,7 +17,9 @@ class GeneradorProcesos
 
 public:
     explicit GeneradorProcesos(int cantidad):cantidad(cantidad),
-        contadorId(0),int_generator(rd()),distOperandos(-10000,10000),
+        contadorId(0),
+        rd(),
+        int_generator(rd()),distOperandos(-10000,10000),
         distOperadores(static_cast<int>(Operador::SUMA),static_cast<int>(Operador::RESTO)),
         distTiempo(1,30)
     {
@@ -27,12 +30,18 @@ public:
     }
     std::shared_ptr<Proceso> next()
     {
-       return std::make_shared<Proceso>("",++contadorId,
+        /*
+         * TODO
+         * Validar casos de operadores
+        */
+       return finished()?nullptr:
+       std::make_shared<Proceso>("",contadorId++,
                     QString::number(distOperandos(int_generator)),
                     QString::number(distOperandos(int_generator)),
                     static_cast<Operador>(distOperadores(int_generator)),
                     distTiempo(int_generator)
                     );
+
     }
 };
 
