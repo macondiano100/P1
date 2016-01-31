@@ -22,20 +22,11 @@ public:
 private:
     using Lote_shrdptr=std::shared_ptr<Lote>;
     Ui::MainWindow *ui;
-    unsigned nProcesosIntroducir;
-    unsigned nProcesosIntroducidos;
-    unsigned tamanioLoteActual;
-    Lote_shrdptr loteActual;
-    void setHabilitacionCamposProceso(bool enabled);
-    void updateCuentaGroupBoxProcesos();
-    std::map <QString,Operador> *opcionesOperadores;
     std::list<Lote_shrdptr> lotes;
     DialogoSimulacion* dialogoSimulacion;
-    bool validaCampos();
     void notificaError(QString razon);
 private slots:
     void nProcesosELegido();
-    void accionBotonSiguienteProceso();
     void accionBotonIniciarSimulacion();
 };
 
