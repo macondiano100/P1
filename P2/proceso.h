@@ -42,5 +42,7 @@ private:
             Operador operador, unsigned tiempo,
             QString resultado, bool resuelto);
 };
-
+namespace std {
+std::string to_string(Proceso &p);
+}
 #endif // PROCESO_H

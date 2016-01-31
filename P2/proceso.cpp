@@ -1,6 +1,20 @@
 #include "proceso.h"
 #include <QtCore/qmath.h>
 #include <QDebug>
+#include <sstream>
+#include <string>
+namespace std{
+    std::string to_string(Proceso &p)
+    {
+        stringstream sstream;
+        sstream<<p.getId()<<"|"<<p.getNombreProgramador().toStdString()<<"\n"<<
+                 p.getOperando1().toStdString()
+              <<" "<<static_cast<int>(p.getOperador())<<" "<<p.getOperando2().toStdString()
+              <<"\n"<<p.getMaxTiempo()<<"s"<<"\n";
+        if(p.estaResuelto()) sstream<<"R="<<p.getResultado().toStdString();
+        return sstream.str();
+    }
+}
 Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
                  QString operando2,Operador operador,
                  unsigned tiempo,QString resultado,bool resuelto)
@@ -93,5 +107,6 @@ unsigned Proceso::getMaxTiempo() const
 {
     return maxTiempo;
 }
+
 
 
