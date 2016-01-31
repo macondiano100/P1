@@ -1,6 +1,7 @@
 #include "dialogosimulacion.h"
 #include "ui_dialogosimulacion.h"
 #include <QList>
+#include <memory>
 DialogoSimulacion::DialogoSimulacion
 (std::list<Lote_shrdptr> &lotes, QWidget *parent) :
     QDialog(parent),
@@ -24,6 +25,7 @@ DialogoSimulacion::DialogoSimulacion
     lote_en_ejecucion=lotesPendientes.front();
     lotesPendientes.pop_front();
     proceso_en_ejecucion=lote_en_ejecucion->pop();
+    lotesTerminados.push_back(std::make_shared<Lote>(LOTE_SIZE));
     updateLabelProcesoActual();
     updateLabelLotesRestantes();
     modeloListaLoteActual=new QStringListModel(this);
@@ -60,18 +62,24 @@ void DialogoSimulacion::updateListaLoteActual()
 void DialogoSimulacion::updateListaProcesosTerminados()
 {
     QList<QString> items;
-    for(auto p:procesosTerminados)
-        items<<tr("Id: ")+
-               QString::number(p->getId())+
-               tr("\n")+
-               p->getOperando1()+
-               opcionesOperadores->at(p->getOperador())+
-               p->getOperando2()+p->getResultado()+tr("=")
-               +p->getResultado()+
-               tr("\n");
+    int i=0;
+    for(auto l:lotesTerminados)
+    {
+        items<<tr("Lote: ")+QString::number(i++)+
+               "\n----------------------------------------------";
+        for(auto p:*l)
+            items<<tr("Id: ")+
+                   QString::number(p->getId())+
+                   tr("\n")+
+                   p->getOperando1()+
+                   opcionesOperadores->at(p->getOperador())+
+                   p->getOperando2()+p->getResultado()+tr("=")
+                   +p->getResultado()+
+                   tr("\n");
+    }
+
     modeloListaProcesoTerminados->setStringList(items);
 }
-
 void DialogoSimulacion::updateLabelProcesoActual(int tiempoTranscurrido)
 {
     if(!finishedSimulation) ui->label_proceso_actual->setText(
@@ -98,7 +106,8 @@ void DialogoSimulacion::changeView(unsigned currTime)
         tiempoProcesoActual++;
         if(tiempoProcesoActual>=proceso_en_ejecucion->getMaxTiempo())
         {
-            procesosTerminados.push_back(proceso_en_ejecucion->solve());
+            tiempoProcesoActual=0;
+            lotesTerminados.back()->push(proceso_en_ejecucion->solve());
             updateListaProcesosTerminados();
             if(lote_en_ejecucion->empty())
             {
@@ -113,6 +122,7 @@ void DialogoSimulacion::changeView(unsigned currTime)
                 {
                     lote_en_ejecucion=lotesPendientes.front();
                     lotesPendientes.pop_front();
+                    lotesTerminados.push_back(std::make_shared<Lote>(LOTE_SIZE));
                     updateLabelLotesRestantes();
                 }
             }

@@ -4,6 +4,7 @@
 #include <memory>
 #include <iterator>
 #include "proceso.h"
+constexpr int LOTE_SIZE=4;
 class Lote
 {
 public:

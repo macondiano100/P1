@@ -21,7 +21,6 @@ public:
 
 private:
     using Lote_shrdptr=std::shared_ptr<Lote>;
-    static constexpr int MAX_PROCESOS_POR_LOTE=4;
     Ui::MainWindow *ui;
     unsigned nProcesosIntroducir;
     unsigned nProcesosIntroducidos;

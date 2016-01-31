@@ -39,7 +39,8 @@ std::unique_ptr<Proceso> Proceso::solve() const
             resultado=QString::number(qSqrt(operando1.toDouble()));
             break;
         case Operador::RESTO:
-            resultado=QString::number(operando1.toInt()%operando1.toInt());
+            resultado=QString::number((int)operando1.toDouble()%
+                                      (int)operando2.toDouble());
             break;
     }
     return  std::unique_ptr<Proceso>(
