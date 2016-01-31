@@ -73,11 +73,10 @@ void DialogoSimulacion::updateListaProcesosTerminados()
                    tr("\n")+
                    p->getOperando1()+
                    opcionesOperadores->at(p->getOperador())+
-                   p->getOperando2()+p->getResultado()+tr("=")
+                   p->getOperando2()+tr("=")
                    +p->getResultado()+
                    tr("\n");
     }
-
     modeloListaProcesoTerminados->setStringList(items);
 }
 void DialogoSimulacion::updateLabelProcesoActual(int tiempoTranscurrido)
