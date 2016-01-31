@@ -13,8 +13,23 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    dialogosimulacion.cpp \
+    lote.cpp \
+    proceso.cpp \
+    Visual/clock.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    dialogosimulacion.h \
+    lote.h \
+    proceso.h \
+    Visual/clock.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogosimulacion.ui \
+    Visual/clock.ui
+CONFIG += c++11
+
+DISTFILES += \
+    P2.pro.user
+
