@@ -3,6 +3,8 @@
 #include <QDebug>
 Clock::Clock(QWidget *parent) :
     QLabel(parent),value(0),
+    ms(0),
+    paused(true),
     ui(new Ui::Clock)
 {
     ui->setupUi(this);
@@ -14,12 +16,26 @@ Clock::Clock(QWidget *parent) :
 
 void Clock::start(int ms){
     setText("0");
+    paused=false;
+    this->ms=ms;
     timer->start(ms);
+}
+
+void Clock::resume()
+{
+    if(paused)timer->start(ms);
+    paused=false;
 }
 
 Clock::~Clock()
 {
     delete ui;
+}
+
+void Clock::pause()
+{
+    paused=true;
+    timer->stop();
 }
 
 void Clock::updateValue()
