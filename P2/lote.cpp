@@ -1,4 +1,6 @@
 #include "lote.h"
+#include <string>
+#include <sstream>
 
 Lote::Lote(unsigned maxSize):maxSize(maxSize)
 {
@@ -46,4 +48,9 @@ Lote::~Lote()
 {
 
 }
+
+
+
+
+
 
