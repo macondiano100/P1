@@ -21,6 +21,7 @@ class Proceso
     const unsigned maxTiempo;
     const QString resultado;
     const bool resuelto;
+    int tiempoEjecucionRestante;
 public:
     std::unique_ptr<Proceso> solve() const;
     ~Proceso();
@@ -36,11 +37,14 @@ public:
             QString operando1, QString operando2,
             Operador operador, unsigned tiempo);
 
+    int getTiempoEjecucionRestante() const;
+    void setTiempoEjecucionRestante(int value);
+
 private:
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,
             Operador operador, unsigned tiempo,
-            QString resultado, bool resuelto);
+            QString resultado, bool resuelto,int tiempoEjecucionRestante);
 };
 namespace std {
 std::string to_string(Proceso &p);

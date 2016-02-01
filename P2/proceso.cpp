@@ -15,30 +15,43 @@ namespace std{
         return sstream.str();
     }
 }
-Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
-                 QString operando2,Operador operador,
-                 unsigned tiempo,QString resultado,bool resuelto)
+Proceso::Proceso(QString nombreProgramador, int id, QString operando1,
+                 QString operando2, Operador operador,
+                 unsigned tiempo, QString resultado, bool resuelto, int tiempoEjecucionRestante)
     :nombreProgramador(nombreProgramador),id(id),
       operando1(operando1),operando2(operando2),operador(operador),
-      maxTiempo(tiempo),resultado(resultado),resuelto(resuelto)
+      maxTiempo(tiempo),resultado(resultado),resuelto(resuelto),
+      tiempoEjecucionRestante(tiempoEjecucionRestante)
 {
 }
 
 Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
                  QString operando2,Operador operador,
                  unsigned tiempo)
-    :Proceso(nombreProgramador,id,operando1,operando2,operador,tiempo,0,false)
+    :Proceso(nombreProgramador,id,operando1,operando2,operador,tiempo,0,false,maxTiempo)
 {
 
 }
 
+
+
+int Proceso::getTiempoEjecucionRestante() const
+{
+    return tiempoEjecucionRestante;
+}
+
+
+void Proceso::setTiempoEjecucionRestante(int value)
+{
+    tiempoEjecucionRestante = value;
+}
 std::unique_ptr<Proceso> Proceso::solve() const
 {
     QString resultado;
     switch(operador)
     {
-        case Operador::SUMA:
-            resultado=QString::number(operando1.toDouble()+operando2.toDouble());
+    case Operador::SUMA:
+        resultado=QString::number(operando1.toDouble()+operando2.toDouble());
             break;
         case Operador::RESTA:
             resultado=QString::number(operando1.toDouble()-operando2.toDouble());
@@ -60,7 +73,7 @@ std::unique_ptr<Proceso> Proceso::solve() const
     return  std::unique_ptr<Proceso>(
                 new Proceso(nombreProgramador,id,
                             operando1,operando2,operador,maxTiempo,
-                            resultado,true));
+                            resultado,true,0));
 }
 
 Proceso::~Proceso()
