@@ -149,6 +149,8 @@ void MainWindow::accionBotonIniciarSimulacion()
 {
     dialogoSimulacion=new DialogoSimulacion(lotes,this);
     dialogoSimulacion->exec();
+    ui->botonNumeroProcesos->setEnabled(true);
+    ui->spinBoxNumeroProcesos->setEnabled(true);
     delete dialogoSimulacion;
     dialogoSimulacion=nullptr;
 }

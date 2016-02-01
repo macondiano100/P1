@@ -62,22 +62,27 @@ void DialogoSimulacion::updateListaLoteActual()
 void DialogoSimulacion::updateListaProcesosTerminados()
 {
     QList<QString> items;
-    int i=0;
+    QString s;
+    int i=1;
     for(auto l:lotesTerminados)
     {
         items<<tr("Lote: ")+QString::number(i++)+
                "\n----------------------------------------------";
         for(auto p:*l)
-            items<<tr("Id: ")+
+        {
+            s+=tr("Id: ")+
                    QString::number(p->getId())+
                    tr("\n")+
-                   p->getOperando1()+
-                   opcionesOperadores->at(p->getOperador())+
-                   p->getOperando2()+p->getResultado()+tr("=")
-                   +p->getResultado()+
-                   tr("\n");
+                   p->getNombreProgramador()+tr("\n");
+            if(p->getOperador()==Operador::RAIZ)
+                s+="\u221A"+p->getOperando1();
+            else s+=p->getOperando1()+opcionesOperadores->at(p->getOperador())+
+                   p->getOperando2();
+            s+=tr("=")+p->getResultado()+tr("\n");
+            items<<s;
+            s.clear();
+        }
     }
-
     modeloListaProcesoTerminados->setStringList(items);
 }
 void DialogoSimulacion::updateLabelProcesoActual(int tiempoTranscurrido)
