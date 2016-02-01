@@ -20,6 +20,7 @@ class DialogoSimulacion : public QDialog
     std::list<std::shared_ptr<Lote>> lotesTerminados;
     Lote::Proceso_ptr proceso_en_ejecucion;
     Lote_shrdptr lote_en_ejecucion;
+    void tomaSiguienteProceso();
     void keyPressEvent(QKeyEvent *event);
 public:
     explicit DialogoSimulacion(std::list<Lote_shrdptr> &lotes,QWidget *parent = 0 );
@@ -30,14 +31,14 @@ private:
     Ui::DialogoSimulacion *ui;
     QStringListModel* modeloListaLoteActual;
     QStringListModel* modeloListaProcesoTerminados;
+    bool finishedSimulation;
+    void updateAllView();
     void updateLabelLotesRestantes();
     void updateListaProcesosTerminados();
     void updateListaLoteActual();
-    void updateLabelProcesoActual(int tiempoTranscurrido=0);
-    unsigned tiempoProcesoActual;
-    bool finishedSimulation;
+    void updateLabelProcesoActual();
  private slots:
-    void changeView(unsigned currTime);
+    void timeAction(unsigned currTime);
 };
 
 #endif // DIALOGOSIMULACION_H

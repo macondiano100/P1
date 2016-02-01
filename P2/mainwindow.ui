@@ -16,7 +16,11 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="2">
-     <widget class="QSpinBox" name="spinBoxNumeroProcesos"/>
+     <widget class="QSpinBox" name="spinBoxNumeroProcesos">
+      <property name="minimum">
+       <number>1</number>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label">

@@ -6,14 +6,14 @@
 #include <unordered_map>
 #include <QDebug>
 #include <limits>
+#include <Modelo/genera_procesos.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     dialogoSimulacion(nullptr)
 {
     ui->setupUi(this);
-    ui->spinBoxNumeroProcesos->setRange(std::numeric_limits<int>::min(),
-                                        std::numeric_limits<int>::max());
+    ui->spinBoxNumeroProcesos->setMaximum(std::numeric_limits<int>::max());
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +43,19 @@ void MainWindow::notificaError(QString razon)
 
 void MainWindow::accionBotonIniciarSimulacion()
 {
+    GeneradorProcesos g(ui->spinBoxNumeroProcesos->value());
+    int maxPorLote=4;
+    int cuentaProcesos=maxPorLote;
+    lotes.clear();
+    while(!g.finished()){
+        if(cuentaProcesos>=maxPorLote)
+        {
+            lotes.push_back(std::make_shared<Lote>(maxPorLote));
+            cuentaProcesos=0;
+        }
+        lotes.back()->push(g.next());
+        cuentaProcesos++;
+    }
     dialogoSimulacion=new DialogoSimulacion(lotes,this);
     dialogoSimulacion->exec();
     delete dialogoSimulacion;

@@ -13,12 +13,18 @@
     <height>173</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="3" column="1" rowspan="3" colspan="2">
     <widget class="QListView" name="listaLoteActual">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="textElideMode">
       <enum>Qt::ElideNone</enum>
      </property>
@@ -109,7 +115,11 @@ color:rgb(0, 255, 127);</string>
     </widget>
    </item>
    <item row="3" column="4" rowspan="3" colspan="2">
-    <widget class="QListView" name="listaProcesosTerminados"/>
+    <widget class="QListView" name="listaProcesosTerminados">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+    </widget>
    </item>
    <item row="2" column="4" colspan="3">
     <widget class="QLabel" name="label_5">
@@ -141,24 +151,7 @@ color:rgb(0, 255, 127);</string>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>clock</sender>
-   <signal>updated(unsigned)</signal>
-   <receiver>DialogoSimulacion</receiver>
-   <slot>changeView(unsigned)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>114</x>
-     <y>26</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>201</x>
-     <y>91</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>changeView(unsigned)</slot>
  </slots>
