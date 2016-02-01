@@ -10,7 +10,10 @@ enum class Operador{
     RAIZ,
     RESTO
 };
-
+enum class Estado
+{
+    ESPERA,EJECUCION,ERROR
+};
 class Proceso
 {
     const QString nombreProgramador;
@@ -19,11 +22,14 @@ class Proceso
     const QString operando2;
     const Operador operador;
     const unsigned maxTiempo;
-    const QString resultado;
-    const bool resuelto;
+    QString resultado;
+    bool resuelto;
     int tiempoEjecucionRestante;
+    Estado estado;
 public:
-    std::unique_ptr<Proceso> solve() const;
+    void solve();
+    bool ocurrioError() const;
+    void setOcurrioError();
     ~Proceso();
     bool estaResuelto() const;
     QString getNombreProgramador() const ;
@@ -39,7 +45,8 @@ public:
 
     int getTiempoEjecucionRestante() const;
     void setTiempoEjecucionRestante(int value);
-
+    void avanzaEjecucion();
+    bool terminado() const;
 private:
     Proceso(QString nombreProgramador, int id,
             QString operando1, QString operando2,

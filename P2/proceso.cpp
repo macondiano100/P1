@@ -22,13 +22,14 @@ Proceso::Proceso(QString nombreProgramador, int id, QString operando1,
       operando1(operando1),operando2(operando2),operador(operador),
       maxTiempo(tiempo),resultado(resultado),resuelto(resuelto),
       tiempoEjecucionRestante(tiempoEjecucionRestante)
+    ,estado(Estado::ESPERA)
 {
 }
 
 Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
                  QString operando2,Operador operador,
                  unsigned tiempo)
-    :Proceso(nombreProgramador,id,operando1,operando2,operador,tiempo,0,false,maxTiempo)
+    :Proceso(nombreProgramador,id,operando1,operando2,operador,tiempo,0,false,tiempo)
 {
 
 }
@@ -45,9 +46,18 @@ void Proceso::setTiempoEjecucionRestante(int value)
 {
     tiempoEjecucionRestante = value;
 }
-std::unique_ptr<Proceso> Proceso::solve() const
+
+void Proceso::avanzaEjecucion()
 {
-    QString resultado;
+    if(!terminado())tiempoEjecucionRestante--;
+}
+
+bool Proceso::terminado() const
+{
+    return !getTiempoEjecucionRestante();
+}
+void Proceso::solve()
+{
     switch(operador)
     {
     case Operador::SUMA:
@@ -70,12 +80,16 @@ std::unique_ptr<Proceso> Proceso::solve() const
                                       (int)operando2.toDouble());
             break;
     }
-    return  std::unique_ptr<Proceso>(
-                new Proceso(nombreProgramador,id,
-                            operando1,operando2,operador,maxTiempo,
-                            resultado,true,0));
 }
-
+bool Proceso::ocurrioError() const
+{
+    return estado==Estado::ERROR;
+}
+void Proceso::setOcurrioError()
+{
+    resultado="ERROR";
+    estado=Estado::ERROR;
+}
 Proceso::~Proceso()
 {
 
