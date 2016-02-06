@@ -7,7 +7,7 @@ namespace std{
     std::string to_string(Proceso &p)
     {
         stringstream sstream;
-        sstream<<p.getId()<<"|"<<p.getNombreProgramador().toStdString()<<"\n"<<
+        sstream<<p.getId()<<"|"<<"\n"<<
                  p.getOperando1().toStdString()
               <<" "<<static_cast<int>(p.getOperador())<<" "<<p.getOperando2().toStdString()
               <<"\n"<<p.getMaxTiempo()<<"s"<<"\n";
@@ -15,21 +15,20 @@ namespace std{
         return sstream.str();
     }
 }
-Proceso::Proceso(QString nombreProgramador, int id, QString operando1,
+Proceso::Proceso(int id, QString operando1,
                  QString operando2, Operador operador,
                  unsigned tiempo, QString resultado, bool resuelto, int tiempoEjecucionRestante)
-    :nombreProgramador(nombreProgramador),id(id),
-      operando1(operando1),operando2(operando2),operador(operador),
+    :id(id),operando1(operando1),operando2(operando2),operador(operador),
       maxTiempo(tiempo),resultado(resultado),resuelto(resuelto),
       tiempoEjecucionRestante(tiempoEjecucionRestante)
     ,estado(Estado::ESPERA)
 {
 }
 
-Proceso::Proceso(QString nombreProgramador,int id,QString operando1,
+Proceso::Proceso(int id,QString operando1,
                  QString operando2,Operador operador,
                  unsigned tiempo)
-    :Proceso(nombreProgramador,id,operando1,operando2,operador,tiempo,0,false,tiempo)
+    :Proceso(id,operando1,operando2,operador,tiempo,0,false,tiempo)
 {
 
 }
@@ -55,6 +54,21 @@ void Proceso::avanzaEjecucion()
 bool Proceso::terminado() const
 {
     return !getTiempoEjecucionRestante();
+}
+
+bool Proceso::bloquear(unsigned tiempo)
+{
+    tiempoBloqueoRestante=tiempo;
+}
+
+bool Proceso::bloqueado()
+{
+    return tiempoBloqueoRestante<=0;
+}
+
+void Proceso::avanzaTiempoBloqueo()
+{
+    tiempoBloqueoRestante--;
 }
 void Proceso::solve()
 {
@@ -90,10 +104,6 @@ void Proceso::setOcurrioError()
     resultado="ERROR";
     estado=Estado::ERROR;
 }
-Proceso::~Proceso()
-{
-
-}
 
 QString Proceso::getResultado() const
 {
@@ -105,10 +115,7 @@ bool Proceso::estaResuelto() const
     return resuelto;
 }
 
-QString Proceso::getNombreProgramador() const
-{
-    return nombreProgramador;
-}
+
 
 int Proceso::getId() const
 {
@@ -133,6 +140,9 @@ Operador Proceso::getOperador() const
 unsigned Proceso::getMaxTiempo() const
 {
     return maxTiempo;
+}
+Proceso::~Proceso(){
+
 }
 
 
