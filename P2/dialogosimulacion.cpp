@@ -34,24 +34,28 @@ void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
     QWidget::keyPressEvent(event);
     switch (event->key()) {
     case Qt::Key_I:
-        tomaSiguienteProceso();
-        break;
-    case Qt::Key_B:
+        if(!paused){
         lote_en_ejecucion->push(proceso_en_ejecucion);
         std::cout<<"B"<<std::endl;
         tomaSiguienteProceso();
+        }
         break;
     case Qt::Key_P:
+        paused=true;
         ui->clock->pause();
         break;
     case Qt::Key_C:
+        paused=false;
         ui->clock->resume();
         break;
     case Qt::Key_E:
-        proceso_en_ejecucion->setOcurrioError();
-        lotesTerminados.back()->push(proceso_en_ejecucion);
-        tomaSiguienteProceso();
-        updateListaProcesosTerminados();
+        if(!paused&&proceso_en_ejecucion!=nullptr)
+        {
+            proceso_en_ejecucion->setOcurrioError();
+            lotesTerminados.back()->push(proceso_en_ejecucion);
+            tomaSiguienteProceso();
+            updateListaProcesosTerminados();
+        }
         break;
     default:
         break;
@@ -60,7 +64,7 @@ void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
 
 DialogoSimulacion::DialogoSimulacion
 (std::list<Lote_shrdptr> &lotes, QWidget *parent) :
-    QDialog(parent),
+    QDialog(parent),paused(false),
     ui(new Ui::DialogoSimulacion),
     finishedSimulation(false)
 {
@@ -111,7 +115,7 @@ void DialogoSimulacion::updateListaLoteActual()
 {
     QList<QString> items;
     for(auto p:*lote_en_ejecucion)
-        items<<p->getNombreProgramador()+
+        items<<QString::number(p->getId())+
                tr("\nT.M.E: ")+QString::number(p->getMaxTiempo())+
                tr("\nTiempo Restante: ")+QString::number(p->getTiempoEjecucionRestante());
     modeloListaLoteActual->setStringList(items);
@@ -144,7 +148,6 @@ void DialogoSimulacion::updateListaProcesosTerminados()
 void DialogoSimulacion::updateLabelProcesoActual()
 {
     if(!finishedSimulation) ui->label_proceso_actual->setText(
-                tr("Programador:")+proceso_en_ejecucion->getNombreProgramador()+"\n"+
                 tr("Operación: ")+
                 opcionesOperadores->at(proceso_en_ejecucion->getOperador())+" "+
                 proceso_en_ejecucion->getOperando1()+","+

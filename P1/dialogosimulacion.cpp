@@ -106,7 +106,6 @@ void DialogoSimulacion::changeView(unsigned currTime)
 {
     if(!finishedSimulation)
     {
-        qDebug()<<"Call me";
         updateLabelProcesoActual(tiempoProcesoActual);
         tiempoProcesoActual++;
         if(tiempoProcesoActual>=proceso_en_ejecucion->getMaxTiempo())
