@@ -137,7 +137,7 @@ void SimulaSistemaOperativo::bloqueaProceso(unsigned t)
     actualizaProcesoEnEjecucion();
 }
 
-std::unique_ptr<Proceso>& SimulaSistemaOperativo::getProcesoEnEjecucion()
+const std::unique_ptr<Proceso>& SimulaSistemaOperativo::getProcesoEnEjecucion()
 {
     return memoria.getProcesoEjecucion();
 }

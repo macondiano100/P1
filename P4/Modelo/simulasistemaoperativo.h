@@ -71,17 +71,25 @@ public:
     template<typename Iter> void agregaProcesos
     (Iter primero, Iter fin);
     void agregaProceso(std::unique_ptr<Proceso> &&proceso);
+
     IteraProcesos beginProcesosListos();
     IteraProcesos endProcesosListos();
+
     IteraProcesos beginProcesosTerminados();
     IteraProcesos endProcesosTerminados();
+
     IteraProcesos beginProcesosBloqueados();
     IteraProcesos endProcesosBloqueados();
+
+    IteraProcesos beginProcesoCreados();
+    IteraProcesos endProcesosCreados();
+
+    const std::unique_ptr<Proceso> &getProcesoEnEjecucion();
+
     void bloqueaProceso(unsigned t);
     void forzarError();
     bool simulacionTerminada();
     Registro_Tiempos dameRegitroTiempos();
-    std::unique_ptr<Proceso> &getProcesoEnEjecucion();
     size_t sizeProcesosCreados();
 public slots:
     void clock();
