@@ -18,7 +18,7 @@ bool GeneradorProcesos::finished()
     return contadorId==cantidad;
 }
 
-std::shared_ptr<Proceso> GeneradorProcesos::next()
+std::unique_ptr<Proceso> GeneradorProcesos::next()
 {
     Operador op=static_cast<Operador>(distOperadores(int_generator));
     std::unique_ptr<std::uniform_int_distribution<int>> distOperandos;
@@ -28,11 +28,13 @@ std::shared_ptr<Proceso> GeneradorProcesos::next()
     }
     else distOperandos.reset(new std::uniform_int_distribution<int>(-100,100));
     return finished()?nullptr:
-                      std::make_shared<Proceso>("",contadorId++,
-                                                QString::number((*distOperandos)(int_generator)),
-                                                QString::number((*distOperandos)(int_generator)),
-                                                op,
-                                                distTiempo(int_generator)
-                                                );
+                      std::unique_ptr<Proceso>(
+                          new Proceso(
+                              contadorId++,
+                              QString::number((*distOperandos)(int_generator)),
+                              QString::number((*distOperandos)(int_generator)),
+                              op,
+                              distTiempo(int_generator)
+                                                ));
 
 }

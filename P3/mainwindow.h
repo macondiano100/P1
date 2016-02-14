@@ -26,7 +26,6 @@ private:
     DialogoSimulacion* dialogoSimulacion;
     void notificaError(QString razon);
 private slots:
-    void nProcesosELegido();
     void accionBotonIniciarSimulacion();
 };
 

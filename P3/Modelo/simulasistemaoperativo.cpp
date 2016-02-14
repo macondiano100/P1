@@ -1,55 +1,161 @@
-#include "simulasistemaoperativo.h"
+#include "Modelo/simulasistemaoperativo.h"
 
-SimulaSistemaOperativo::SimulaSistemaOperativo(QObject *parent) : QObject(parent),memoria(4)
+SimulaSistemaOperativo::SimulaSistemaOperativo(QObject *parent) : QObject(parent),memoria(4),
+    finalizado(false)
 {
-
+    insertaProcesosAMemoria();
+    actualizaProcesoEnEjecucion();
 }
 
 SimulaSistemaOperativo::~SimulaSistemaOperativo()
 {
 
 }
-#include <QDebug>
-void SimulaSistemaOperativo::clock()
+
+void SimulaSistemaOperativo::actualizaProcesoEnEjecucion()
 {
     auto& procesoEjecutandose=memoria.getProcesoEjecucion();
-    segundoActual++;
+    if(procesoEjecutandose==nullptr){
+        if(memoria.sizeProcesosListos()==0)return;
+        memoria.ejecutaSiguiente();
+        auto& procesoEjecutandose=memoria.getProcesoEjecucion();
+        if(tiempos[procesoEjecutandose->getId()].segundoInicio==infoTiempoProceso::npos)
+           tiempos[procesoEjecutandose->getId()].segundoInicio=segundoActual;
+
+    }
+}
+
+void SimulaSistemaOperativo::insertaProcesosAMemoria()
+{
     auto beginProcesosCreados=creados.begin(),endCreados=creados.end();
+    auto& procesoEjecutandose=memoria.getProcesoEjecucion();
     while(!memoria.llena()&&beginProcesosCreados!=endCreados)
     {
+        tiempos[(*beginProcesosCreados)->getId()].segundoLlegada=segundoActual;
         memoria.agregaProceso(move(*beginProcesosCreados));
         beginProcesosCreados=creados.erase(beginProcesosCreados);
     }
-    if(procesoEjecutandose==nullptr){
-        memoria.ejecutaSiguiente();
-        auto& procesoEjecutandose=memoria.getProcesoEjecucion();
-         if(tiempos[procesoEjecutandose->getId()].segundoRespuesta==(unsigned)-1);
-           tiempos[procesoEjecutandose->getId()].segundoRespuesta=segundoActual;
-    }
-    procesoEjecutandose->avanzaEjecucion();
-    if(procesoEjecutandose->terminado()){
-        procesoEjecutandose->solve();
-        qDebug()<<"Solved "<<procesoEjecutandose->getId();
-        tiempos[procesoEjecutandose->getId()].segundoFinalizacion=segundoActual;
-        terminados.push_back(move(procesoEjecutandose));
-    }
+}
+
+void SimulaSistemaOperativo::actualizaProcesosBloqueados()
+{
     auto beginBloqueados=memoria.beginProcesosBloqueados();
     auto endBloqueados=memoria.endProcesosBloqueados();
     while(beginBloqueados!=endBloqueados)
     {
         (*beginBloqueados)->avanzaTiempoBloqueo();
-        tiempos[(*beginBloqueados)->getId()].tiempoEspera++;
-        if(!(*beginBloqueados)->bloqueado())memoria.desbloquear(beginBloqueados);
+        if(!((*beginBloqueados)->bloqueado()))
+        {
+            memoria.desbloquear(beginBloqueados);
+        }
         beginBloqueados++;
     }
+}
 
+void SimulaSistemaOperativo::forzarError()
+{
+    auto &procesoEjecutandose=memoria.getProcesoEjecucion();
+    if(procesoEjecutandose!=nullptr)
+    {
+        tiempos[procesoEjecutandose->getId()].segundoFinalizacion=segundoActual;
+        tiempos[procesoEjecutandose->getId()].tiempoServicio=
+                tiempos[procesoEjecutandose->getId()].tiempoServicio-
+                procesoEjecutandose->getTiempoEjecucionRestante();
+        terminados.push_back(move(memoria.errorEjecucion()));
+        actualizaProcesoEnEjecucion();
+    }
+}
+
+bool SimulaSistemaOperativo::simulacionTerminada()
+{
+    return  finalizado=
+            memoria.getProcesoEjecucion()==nullptr&&
+            creados.empty()&&
+            beginProcesosBloqueados()==endProcesosBloqueados()&&
+            beginProcesosListos()==endProcesosListos();
+}
+
+SimulaSistemaOperativo::Registro_Tiempos SimulaSistemaOperativo::dameRegitroTiempos()
+{
+    return tiempos;
+}
+
+size_t SimulaSistemaOperativo::sizeProcesosCreados()
+{
+    return creados.size();
+}
+
+void SimulaSistemaOperativo::actualizaProcesosListos()
+{
     auto beginListos=memoria.beginProcesosListos();
     auto endListos=memoria.endProcesosListos();
     while(beginListos!=endListos)
     {
-        tiempos[(*beginListos)->getId()].tiempoEspera++;
         beginListos++;
     }
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::beginProcesosListos()
+{
+    return memoria.beginProcesosListos();
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::endProcesosListos()
+{
+    return memoria.endProcesosListos();
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::beginProcesosTerminados()
+{
+    return terminados.begin();
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::endProcesosTerminados()
+{
+    return terminados.end();
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::beginProcesosBloqueados()
+{
+    return memoria.beginProcesosBloqueados();
+}
+
+SimulaSistemaOperativo::IteraProcesos SimulaSistemaOperativo::endProcesosBloqueados()
+{
+    return memoria.endProcesosBloqueados();
+}
+
+void SimulaSistemaOperativo::bloqueaProceso(unsigned t)
+{
+    memoria.bloqueaEjecucion(t);
+    actualizaProcesoEnEjecucion();
+}
+
+std::unique_ptr<Proceso>& SimulaSistemaOperativo::getProcesoEnEjecucion()
+{
+    return memoria.getProcesoEjecucion();
+}
+
+#include <QDebug>
+void SimulaSistemaOperativo::clock()
+{
+    segundoActual++;
+    auto& procesoEjecutandose=memoria.getProcesoEjecucion();
+    if(procesoEjecutandose!=nullptr)
+    {
+        procesoEjecutandose->avanzaEjecucion();
+        if(procesoEjecutandose->terminado()){
+            procesoEjecutandose=memoria.resuelveProcesoEnEjecucion();
+            tiempos[procesoEjecutandose->getId()].segundoFinalizacion=segundoActual;
+            terminados.push_back(move(procesoEjecutandose));
+        }
+    }
+
+    insertaProcesosAMemoria();
+    actualizaProcesosListos();
+    actualizaProcesosBloqueados();
+    actualizaProcesoEnEjecucion();
+
 }
 
 
@@ -63,11 +169,39 @@ void Memoria::ejecutaSiguiente()
     }
 }
 
-void Memoria::bloqueaEjecucion()
+std::unique_ptr<Proceso> Memoria::resuelveProcesoEnEjecucion()
 {
-    bloqueados.push_back(std::move(procesoEjecucion));
-    ejecutaSiguiente();
+
+    if(procesoEjecucion!=nullptr)
+    {
+        procesoEjecucion->solve();
+        curr_size--;
+        return std::move(procesoEjecucion);
+    }
+    return nullptr;
 }
+
+void Memoria::bloqueaEjecucion(unsigned t)
+{
+   if(procesoEjecucion)
+   {
+       procesoEjecucion->bloquear(t);
+       bloqueados.push_back(std::move(procesoEjecucion));
+   }
+}
+
+std::unique_ptr<Proceso> Memoria::errorEjecucion()
+{
+    if(procesoEjecucion)
+    {
+        procesoEjecucion->setOcurrioError();
+        curr_size--;
+        return std::move(procesoEjecucion);
+    }
+    return nullptr;
+}
+
+
 
 void Memoria::agregaProceso(std::unique_ptr<Proceso> &&proceso)
 {
@@ -86,6 +220,13 @@ Memoria::IteraProcesos Memoria::beginProcesosListos()
 Memoria::IteraProcesos Memoria::endProcesosListos()
 {
     return listos.end();
+}
+
+
+
+size_t Memoria::sizeProcesosListos()
+{
+    return listos.size();
 }
 
 Memoria::IteraProcesos Memoria::beginProcesosBloqueados()
@@ -110,11 +251,12 @@ bool Memoria::llena()
 
 void Memoria::desbloquear(Memoria::IteraProcesos pos)
 {
+    qDebug()<<"Desbloquea "<<(*pos)->getId();
     listos.push_back(move(*pos));
     bloqueados.erase(pos);
 
 }
-Memoria::Memoria(size_t MAX_SIZE):MAX_SIZE(MAX_SIZE),curr_size(0)
+Memoria::Memoria(size_t MAX_SIZE):curr_size(0),MAX_SIZE(MAX_SIZE)
 {
 }
 

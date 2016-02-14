@@ -6,7 +6,7 @@
 #include <memory>
 #include <QStringListModel>
 #include <unordered_map>
-#include "lote.h"
+#include "modelo/simulasistemaoperativo.h"
 namespace Ui {
 class DialogoSimulacion;
 }
@@ -15,30 +15,27 @@ class DialogoSimulacion : public QDialog
 {
     Q_OBJECT
     std::map <Operador,QString> *opcionesOperadores;
-    using Lote_shrdptr=std::shared_ptr<Lote>;
-    std::list<Lote_shrdptr> lotesPendientes;
-    std::list<std::shared_ptr<Lote>> lotesTerminados;
-    Lote::Proceso_ptr proceso_en_ejecucion;
-    Lote_shrdptr lote_en_ejecucion;
-    void tomaSiguienteProceso();
     void keyPressEvent(QKeyEvent *event);
+    static constexpr int TIEMPO_BLOQUEO=8;
 public:
-    explicit DialogoSimulacion(std::list<Lote_shrdptr> &lotes,QWidget *parent = 0 );
+    explicit DialogoSimulacion(std::list<std::unique_ptr<Proceso>> &procesos,QWidget *parent = 0);
     ~DialogoSimulacion();
-
+    SimulaSistemaOperativo sistemaOperativo;
 private:
 
-    Ui::DialogoSimulacion *ui;
     QStringListModel* modeloListaLoteActual;
     QStringListModel* modeloListaProcesoTerminados;
-    bool finishedSimulation;
+    QStringListModel* modeloListaProcesoBloqueados;
+    bool paused;
+    Ui::DialogoSimulacion *ui;
     void updateAllView();
     void updateLabelLotesRestantes();
     void updateListaProcesosTerminados();
-    void updateListaLoteActual();
+    void updateListaProcesosBloqueados();
+    void updateListaProcesosListos();
     void updateLabelProcesoActual();
  private slots:
-    void timeAction(unsigned currTime);
+    void timeAction();
 };
 
 #endif // DIALOGOSIMULACION_H

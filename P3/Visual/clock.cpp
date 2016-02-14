@@ -43,4 +43,5 @@ void Clock::updateValue()
     qDebug()<<value;
     setText(QString::number(++value));
     emit updated(value);
+    emit updated();
 }

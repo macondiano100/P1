@@ -23,40 +23,14 @@ MainWindow::~MainWindow()
 }
 
 
-
-
-void MainWindow::nProcesosELegido()
-{
-    int nProcesos;
-    nProcesos=ui->spinBoxNumeroProcesos->value();
-    if(nProcesos>0)
-    {
-        ui->spinBoxNumeroProcesos->setEnabled(false);
-    }
-}
-void MainWindow::notificaError(QString razon)
-{
-    QMessageBox msgBOx(this);
-    msgBOx.setText(razon);
-    msgBOx.exec();
-}
-
 void MainWindow::accionBotonIniciarSimulacion()
 {
     GeneradorProcesos g(ui->spinBoxNumeroProcesos->value());
-    int maxPorLote=4;
-    int cuentaProcesos=maxPorLote;
-    lotes.clear();
+    std::list<std::unique_ptr<Proceso>> procesos;
     while(!g.finished()){
-        if(cuentaProcesos>=maxPorLote)
-        {
-            lotes.push_back(std::make_shared<Lote>(maxPorLote));
-            cuentaProcesos=0;
-        }
-        lotes.back()->push(g.next());
-        cuentaProcesos++;
+        procesos.push_back(std::move(g.next()));
     }
-    dialogoSimulacion=new DialogoSimulacion(lotes,this);
+    dialogoSimulacion=new DialogoSimulacion(procesos,this);
     dialogoSimulacion->exec();
     delete dialogoSimulacion;
     dialogoSimulacion=nullptr;

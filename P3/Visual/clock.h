@@ -26,6 +26,7 @@ private:
     Ui::Clock *ui;
 signals:
     void updated(unsigned value);
+    void updated();
 public slots:
     void pause();
     void updateValue();

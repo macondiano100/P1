@@ -18,13 +18,21 @@ SOURCES += main.cpp\
     Visual/clock.cpp \
     dialogosimulacion.cpp \
     lote.cpp \
-    proceso.cpp
+    proceso.cpp \
+    Modelo/simulasistemaoperativo.cpp \
+    Visual/dialogotiempos.cpp
 
 HEADERS  += mainwindow.h \
     Modelo/genera_procesos.h \
     Visual/clock.h \
     dialogosimulacion.h \
     lote.h \
-    proceso.h
+    proceso.h \
+    Visual/dialogotiempos.h \
+    Modelo/simulasistemaoperativo.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    Visual/clock.ui \
+    dialogosimulacion.ui \
+    Visual/dialogotiempos.ui
+CONFIG += c++11

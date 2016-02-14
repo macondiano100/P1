@@ -56,14 +56,19 @@ bool Proceso::terminado() const
     return !getTiempoEjecucionRestante();
 }
 
-bool Proceso::bloquear(unsigned tiempo)
+void Proceso::bloquear(unsigned tiempo)
 {
     tiempoBloqueoRestante=tiempo;
 }
 
+unsigned Proceso::getTiempoBloqueoRestante() const
+{
+    return tiempoBloqueoRestante;
+}
+
 bool Proceso::bloqueado()
 {
-    return tiempoBloqueoRestante<=0;
+    return tiempoBloqueoRestante>0;
 }
 
 void Proceso::avanzaTiempoBloqueo()

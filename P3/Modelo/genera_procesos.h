@@ -17,7 +17,7 @@ class GeneradorProcesos
 public:
     explicit GeneradorProcesos(int cantidad);
     bool finished();
-    std::shared_ptr<Proceso> next();
+    std::unique_ptr<Proceso> next();
 };
 
 #endif // GENERA_PROCESOS_H

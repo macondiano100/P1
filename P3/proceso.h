@@ -46,7 +46,8 @@ public:
     void setTiempoEjecucionRestante(int value);
     void avanzaEjecucion();
     bool terminado() const;
-    bool bloquear(unsigned tiempo);
+    void bloquear(unsigned tiempo);
+    unsigned getTiempoBloqueoRestante() const;
     bool bloqueado();
     void avanzaTiempoBloqueo();
 private:

@@ -11,12 +11,10 @@ unsigned Lote::getMaxSize() const
 {
     return getMaxSize();
 }
-
 void Lote::push(Proceso_ptr proceso)
 {
     procesos.push_back(proceso);
 }
-
 Lote::Proceso_ptr Lote::pop()
 {
     auto p=procesos.front();
