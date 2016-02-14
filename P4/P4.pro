@@ -31,4 +31,8 @@ HEADERS  += mainwindow.h \
     lote.h \
     proceso.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dialogosimulacion.ui \
+    Visual/clock.ui \
+    Visual/dialogotiempos.ui
+CONFIG += c++11

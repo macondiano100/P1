@@ -19,7 +19,6 @@ class Memoria: public QObject
 public:
     void bloqueaEjecucion();
     void ejecutaSiguiente();
-    void agregaProceso(std::unique_ptr<Proceso> &&proceso);
     IteraProcesos beginProcesosListos();
     IteraProcesos endProcesosListos();
     IteraProcesos beginProcesosBloqueados();
@@ -31,7 +30,7 @@ public:
     std::unique_ptr<Proceso> resuelveProcesoEnEjecucion();
     void bloqueaEjecucion(unsigned t);
     std::unique_ptr<Proceso> errorEjecucion();
-    void agregaProceso(std::unique_ptr<Proceso> &proceso);
+    void agregaProceso(std::unique_ptr<Proceso> &&proceso);
     size_t sizeProcesosListos();
 };
 
@@ -71,6 +70,7 @@ public:
     ~SimulaSistemaOperativo();
     template<typename Iter> void agregaProcesos
     (Iter primero, Iter fin);
+    void agregaProceso(std::unique_ptr<Proceso> &&proceso);
     IteraProcesos beginProcesosListos();
     IteraProcesos endProcesosListos();
     IteraProcesos beginProcesosTerminados();

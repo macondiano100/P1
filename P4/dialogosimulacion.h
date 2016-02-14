@@ -29,7 +29,7 @@ private:
     bool paused;
     Ui::DialogoSimulacion *ui;
     void updateAllView();
-    void updateLabelLotesRestantes();
+    void updateLabelProcesosCreados();
     void updateListaProcesosTerminados();
     void updateListaProcesosBloqueados();
     void updateListaProcesosListos();

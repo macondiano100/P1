@@ -6,6 +6,7 @@
 #include <QDebug>
 #include "dialogosimulacion.h"
 #include "ui_dialogosimulacion.h"
+#include "Modelo/genera_procesos.h"
 #include "Visual/dialogotiempos.h"
 void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
 {
@@ -19,6 +20,16 @@ void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
     case Qt::Key_P:
         paused=true;
         ui->clock->pause();
+        break;
+    case Qt::Key_N:
+
+        //if(!paused)
+        {
+            GeneradorProcesos generador(1);
+            sistemaOperativo.agregaProceso(generador.next());
+            updateLabelProcesosCreados();
+            updateListaProcesosListos();
+      }
         break;
     case Qt::Key_C:
         paused=false;
@@ -41,9 +52,9 @@ void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
 
 DialogoSimulacion::DialogoSimulacion
 (std::list<std::unique_ptr<Proceso> > &procesos, QWidget *parent):
-    QDialog(parent),
+    QDialog(parent),sistemaOperativo(),
     paused(false),
-    ui(new Ui::DialogoSimulacion),sistemaOperativo()
+    ui(new Ui::DialogoSimulacion)
 {
     ui->setupUi(this);
     opcionesOperadores
@@ -68,7 +79,7 @@ DialogoSimulacion::DialogoSimulacion
     ui->listaProcesosBloqueados->setModel(modeloListaProcesoBloqueados);
     ui->listaProcesosBloqueados->setEditTriggers(QAbstractItemView::NoEditTriggers);
     updateListaProcesosListos();
-    updateLabelLotesRestantes();
+    updateLabelProcesosCreados();
     updateLabelProcesoActual();
     connect(ui->clock,SIGNAL(updated()),this,SLOT(timeAction()));
 }
@@ -82,7 +93,7 @@ DialogoSimulacion::~DialogoSimulacion()
 
 
 
-void DialogoSimulacion::updateLabelLotesRestantes()
+void DialogoSimulacion::updateLabelProcesosCreados()
 {
     ui->labelNuevos->setText(QString::number(sistemaOperativo.sizeProcesosCreados()));
 }
@@ -183,6 +194,6 @@ void DialogoSimulacion::timeAction()
         updateListaProcesosListos();
         updateListaProcesosTerminados();
         updateListaProcesosBloqueados();
-        updateLabelLotesRestantes();
+        updateLabelProcesosCreados();
     }
 }

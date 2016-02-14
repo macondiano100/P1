@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\genera_procesos.o
+./release\simulasistemaoperativo.o
+./release\clock.o
+./release\dialogotiempos.o
+./release\dialogosimulacion.o
+./release\lote.o
+./release\proceso.o
+./release\moc_mainwindow.o
+./release\moc_simulasistemaoperativo.o
+./release\moc_clock.o
+./release\moc_dialogotiempos.o
+./release\moc_dialogosimulacion.o
+);

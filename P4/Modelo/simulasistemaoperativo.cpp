@@ -12,6 +12,12 @@ SimulaSistemaOperativo::~SimulaSistemaOperativo()
 
 }
 
+void SimulaSistemaOperativo::agregaProceso(std::unique_ptr<Proceso> &&proceso)
+{
+    creados.push_back(move(proceso));
+    insertaProcesosAMemoria();
+}
+
 void SimulaSistemaOperativo::actualizaProcesoEnEjecucion()
 {
     auto& procesoEjecutandose=memoria.getProcesoEjecucion();
@@ -200,9 +206,6 @@ std::unique_ptr<Proceso> Memoria::errorEjecucion()
     }
     return nullptr;
 }
-
-
-
 void Memoria::agregaProceso(std::unique_ptr<Proceso> &&proceso)
 {
     if(curr_size<MAX_SIZE)
