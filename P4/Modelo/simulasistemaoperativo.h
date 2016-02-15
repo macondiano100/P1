@@ -43,8 +43,8 @@ class SimulaSistemaOperativo : public QObject
     Q_OBJECT
 
     using ListaProcesos=std::list<std::unique_ptr<Proceso>>;
-    using IteraProcesos=ListaProcesos::iterator;
 public:
+    using IteraProcesos=ListaProcesos::iterator;
     struct infoTiempoProceso
     {
         static constexpr unsigned int npos=-1;
@@ -70,6 +70,7 @@ public:
     ~SimulaSistemaOperativo();
     template<typename Iter> void agregaProcesos
     (Iter primero, Iter fin);
+    unsigned getSegundoActual();
     void agregaProceso(std::unique_ptr<Proceso> &&proceso);
 
     IteraProcesos beginProcesosListos();
@@ -84,7 +85,7 @@ public:
     IteraProcesos beginProcesoCreados();
     IteraProcesos endProcesosCreados();
 
-    const std::unique_ptr<Proceso> &getProcesoEnEjecucion();
+    std::unique_ptr<Proceso> &getProcesoEnEjecucion();
 
     void bloqueaProceso(unsigned t);
     void forzarError();

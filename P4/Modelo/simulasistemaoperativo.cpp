@@ -12,6 +12,11 @@ SimulaSistemaOperativo::~SimulaSistemaOperativo()
 
 }
 
+unsigned SimulaSistemaOperativo::getSegundoActual()
+{
+    return segundoActual;
+}
+
 void SimulaSistemaOperativo::agregaProceso(std::unique_ptr<Proceso> &&proceso)
 {
     creados.push_back(move(proceso));
@@ -137,7 +142,7 @@ void SimulaSistemaOperativo::bloqueaProceso(unsigned t)
     actualizaProcesoEnEjecucion();
 }
 
-const std::unique_ptr<Proceso>& SimulaSistemaOperativo::getProcesoEnEjecucion()
+std::unique_ptr<Proceso> &SimulaSistemaOperativo::getProcesoEnEjecucion()
 {
     return memoria.getProcesoEjecucion();
 }

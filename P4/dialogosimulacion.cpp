@@ -21,9 +21,19 @@ void DialogoSimulacion::keyPressEvent(QKeyEvent *event)
         paused=true;
         ui->clock->pause();
         break;
+    case Qt::Key_B:
+    {
+        paused=true;
+        ui->clock->pause();
+        DialogoTiempos dialogo(sistemaOperativo);
+        dialogo.exec();
+        paused=false;
+        ui->clock->resume();
+        break;
+    }
     case Qt::Key_N:
 
-        //if(!paused)
+        if(!paused)
         {
             GeneradorProcesos generador(1);
             sistemaOperativo.agregaProceso(generador.next());
@@ -183,9 +193,6 @@ void DialogoSimulacion::timeAction()
     if(sistemaOperativo.simulacionTerminada())
     {
         ui->clock->pause();
-        DialogoTiempos d(sistemaOperativo.dameRegitroTiempos());
-        d.exec();
-        close();
     }
     else
     {

@@ -37,10 +37,6 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         tableViewTiempos = new QTableView(DialogoTiempos);
         tableViewTiempos->setObjectName(QStringLiteral("tableViewTiempos"));
-        tableViewTiempos->setEnabled(true);
-        tableViewTiempos->setFocusPolicy(Qt::NoFocus);
-        tableViewTiempos->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        tableViewTiempos->setCornerButtonEnabled(false);
 
         gridLayout->addWidget(tableViewTiempos, 0, 0, 1, 1);
 
